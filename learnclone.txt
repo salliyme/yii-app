@@ -1,1 +1,0 @@
-learn clone git: git clone git@github.com:salliyme/yii-app.git

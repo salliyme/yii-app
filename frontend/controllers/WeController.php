@@ -27,9 +27,20 @@ class WeController extends BaseController
         echo $result;
     }
 
+    /**
+     * index function
+     */
     public function actionIndex()
     {
         echo 'index';
     }
 
+    /**
+     * auth function
+     */
+    public function actionAuth()
+    {
+        $we = new WeApi();
+        echo 'AuthUrl will be support';
+    }
 }

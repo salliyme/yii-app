@@ -130,9 +130,8 @@ class WeApi
         ];
 
         $url = $this->composeUrl($url, $params);
-        echo $url;
         $result = static::curlGet($url);
-        //$result = json_decode($result, true);
+        $result = json_decode($result, true);
 
         return $result;
     }
@@ -277,7 +276,8 @@ class WeApi
      */
     public static function curlGet($url = '', $options = array())
     {
-        $ch = curl_init($url);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         if (!empty($options)) {

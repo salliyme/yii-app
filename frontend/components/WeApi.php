@@ -72,9 +72,9 @@ class WeApi
     }
 
     /**
-     * get Oauth2 access_token
      * @param $code
      * @return mixed
+     * @throws \Exception
      */
     public function getOauth2AccessToken($code)
     {
@@ -87,6 +87,11 @@ class WeApi
         ];
 
         $result = static::curlPost($url, $params);
+        $result = json_decode($result, true);
+        if (!isset($result['access_token'])) {
+            throw new \Exception('获取OAuth2AccessToken 失败');
+        }
+
         return $result;
     }
 
@@ -125,6 +130,7 @@ class WeApi
         ];
 
         $result = static::curlPost($url, $params);
+        $result = json_decode($result, true);
 
         return $result;
     }

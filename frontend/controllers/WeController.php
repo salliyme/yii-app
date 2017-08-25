@@ -33,8 +33,13 @@ class WeController extends BaseController
     public function actionIndex()
     {
         $we = new WeApi();
-        $url = $we->buildOAuth2Url(Yii::$app->request->absoluteUrl, 'snsapi_base', 'login');
-        $this->redirect($url);
+        if (isset($_GET['code'], $_GET['state'])) {
+            $result = $we->getOauth2AccessToken($_GET['code']);
+            var_dump($result);
+        } else {
+            $url = $we->buildOAuth2Url(Yii::$app->request->absoluteUrl, 'snsapi_base', 'login');
+            $this->redirect($url);
+        }
     }
 
     /**

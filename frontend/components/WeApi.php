@@ -122,7 +122,7 @@ class WeApi
      */
     public function getOauth2UserInfo($access_token, $openid)
     {
-        $url = ' https://api.weixin.qq.com/sns/userinfo';
+        $url = 'https://api.weixin.qq.com/sns/userinfo';
         $params = [
             'access_token' => $access_token,
             'openid' => $openid,

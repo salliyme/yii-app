@@ -130,6 +130,7 @@ class WeApi
         ];
 
         $url = $this->composeUrl($url, $params);
+        echo $url;
         $result = static::curlGet($url);
         //$result = json_decode($result, true);
 

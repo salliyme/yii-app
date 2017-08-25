@@ -35,6 +35,7 @@ class WeController extends BaseController
         $we = new WeApi();
         if (isset($_GET['code'], $_GET['state'])) {
             $result = $we->getOauth2AccessToken($_GET['code']);
+            var_dump($result);
             $info = $we->getOauth2UserInfo($result['access_token'], $result['openid']);
             var_dump($info);
         } else {

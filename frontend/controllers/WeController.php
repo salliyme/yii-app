@@ -39,7 +39,7 @@ class WeController extends BaseController
             $info = $we->getOauth2UserInfo($result['access_token'], $result['openid']);
             var_dump($info);
         } else {
-            $url = $we->buildOAuth2Url(Yii::$app->request->absoluteUrl, 'snsapi_base', 'login');
+            $url = $we->buildOAuth2Url(Yii::$app->request->absoluteUrl, 'snsapi_userinfo', 'login');
             $this->redirect($url);
         }
     }

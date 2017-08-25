@@ -32,7 +32,9 @@ class WeController extends BaseController
      */
     public function actionIndex()
     {
-        echo 'index';
+        $we = new WeApi();
+        $url = $we->buildOAuth2Url(Yii::$app->request->absoluteUrl, 'base', 'login');
+        $this->redirect($url);
     }
 
     /**

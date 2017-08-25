@@ -55,7 +55,7 @@ class WeApi
      * @param $state
      * @return string
      */
-    public function oAuth2Url($redirect_uri, $scope, $state)
+    public function buildOAuth2Url($redirect_uri, $scope, $state)
     {
         $url = 'https://open.weixin.qq.com/connect/oauth2/authorize';
         $params = [

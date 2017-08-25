@@ -129,7 +129,8 @@ class WeApi
             'lang' => 'zh_CN'
         ];
 
-        $result = static::curlPost($url, $params);
+        $url = $this->composeUrl($url, $params);
+        $result = static::curlGet($url);
         $result = json_decode($result, true);
 
         return $result;

@@ -36,6 +36,21 @@ class WeApi
      */
     private $jsapiTicketKey = 'wechat_jsapi_ticket';
 
+    private $oAuthToken;
+
+    public function setOAuthToken(OAuthToken $token)
+    {
+        $this->oAuthToken = $token;
+    }
+
+    public function getOAuthToken()
+    {
+        if (!is_object($this->oAuthToken) || $this->oAuthToken->isExpired()) {
+            // 获取token
+        }
+        
+        return $this->oAuthToken;
+    }
     /**
      * @return \yii\caching\Cache
      */

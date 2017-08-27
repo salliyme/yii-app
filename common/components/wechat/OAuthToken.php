@@ -5,13 +5,13 @@
  * Date: 2017/8/25 21:03
  */
 
-namespace frontend\components;
+namespace common\components\wechat;
 
 use yii\base\Object;
 
 /**
  * Class OAuthToken
- * @package frontend\components
+ * @package common\components\wechat
  */
 class OAuthToken extends Object
 {

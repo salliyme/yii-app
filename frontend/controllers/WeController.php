@@ -7,6 +7,8 @@
 
 namespace frontend\controllers;
 
+use common\components\wechat\BaseApi;
+use common\components\wechat\OAuthApi;
 use frontend\components\BaseController;
 use frontend\components\WeApi;
 use Yii;
@@ -22,7 +24,7 @@ class WeController extends BaseController
      */
     public function actionValid()
     {
-        $we = new WeApi();
+        $we = new BaseApi();
         $result = $we->validate();
         echo $result;
     }
@@ -32,7 +34,7 @@ class WeController extends BaseController
      */
     public function actionIndex()
     {
-        $we = new WeApi();
+        $we = new OAuthApi();
         if (isset($_GET['code'], $_GET['state'])) {
             $result = $we->getOauth2AccessToken($_GET['code']);
             $info = $we->getOauth2UserInfo($result['access_token'], $result['openid']);
@@ -41,14 +43,5 @@ class WeController extends BaseController
             $url = $we->buildOAuth2Url(Yii::$app->request->absoluteUrl, 'snsapi_userinfo', 'login');
             $this->redirect($url);
         }
-    }
-
-    /**
-     * auth function
-     */
-    public function actionAuth()
-    {
-        $we = new WeApi();
-        echo 'AuthUrl will be support';
     }
 }

@@ -9,6 +9,8 @@
 namespace backend\controllers\wechat;
 
 use backend\components\XController;
+use common\components\wechat\MenuApi;
+use Yii;
 
 /**
  * Class MenuController
@@ -16,6 +18,8 @@ use backend\components\XController;
  */
 class MenuController extends XController
 {
+    public $enableCsrfValidation = false;
+
     /**
      * @return string
      */
@@ -29,6 +33,44 @@ class MenuController extends XController
      */
     public function actionCustom()
     {
+        if (Yii::$app->request->isPost) {
+            $json = ' {
+             "button":[
+                 {    
+                      "type":"click",
+                      "name":"今日歌曲",
+                      "key":"V1001_TODAY_MUSIC"
+                  },
+                  {
+                       "type":"click",
+                       "name":"歌手简介",
+                       "key":"V1001_TODAY_SINGER"
+                  },
+                  {
+                       "name":"菜单",
+                       "sub_button":[
+                       {    
+                           "type":"view",
+                           "name":"搜索",
+                           "url":"http://www.soso.com/"
+                        },
+                        {
+                           "type":"view",
+                           "name":"视频",
+                           "url":"http://v.qq.com/"
+                        },
+                        {
+                           "type":"click",
+                           "name":"赞一下我们",
+                           "key":"V1001_GOOD"
+                        }]
+                   }]
+             }';
+            $menu = new MenuApi();
+            $result = $menu->create($json);
+            var_dump($result);
+        }
+
         return $this->render('custom');
     }
 }

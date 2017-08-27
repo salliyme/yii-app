@@ -19,23 +19,29 @@ class BaseApi
     /**
      * @var string wechat appid
      */
-    protected $appid = 'wxc378d8aa32db0b26';
+    protected $appid;
 
     /**
      * @var string wechat app secret
      */
-    protected $secret = 'd4624c36b6795d1d99dcf0547af5443d';
+    protected $secret;
 
     /**
      * @var string
      */
-    protected $token = 'salliyme';
+    protected $token;
 
     /**
      * @var string wechat token cache key
      */
     private $accessTokenKey = 'wechat_access_token';
 
+    public function __construct()
+    {
+        $this->appid = Yii::$app->params['wechat']['appid'];
+        $this->secret = Yii::$app->params['wechat']['secret'];
+        $this->token = Yii::$app->params['wechat']['token'];
+    }
 
     /**
      * @return \yii\caching\Cache

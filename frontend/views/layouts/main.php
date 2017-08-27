@@ -66,7 +66,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p> Copyright @ 2017-2020 世纪创想科技 版权所有 蜀ICP备15008579号</p>
+        <p> Copyright @ 2017-2020 版权所有</p>
     </div>
 </footer>
 

@@ -27,8 +27,7 @@ class WeController extends BaseController
         if (isset($_GET['echostr'])) {
             $this->validate();
         } else {
-            echo "success";
-            //$this->responseMsg();
+            $this->responseMsg();
         }
     }
 
@@ -65,7 +64,7 @@ class WeController extends BaseController
             }
             echo $resultStr;
         } else {
-            echo "no message to parse";
+            echo "";
         }
     }
 

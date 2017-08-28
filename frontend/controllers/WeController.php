@@ -51,7 +51,7 @@ class WeController extends BaseController
      */
     private function responseMsg()
     {
-        $postStr = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
+        $postStr = file_get_contents("php://input");
         if (!empty($postStr)) {
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $msgType = trim($postObj->MsgType);

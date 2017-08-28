@@ -69,7 +69,7 @@ class WeController extends BaseController
             }
             echo $resultStr;
         } else {
-            echo "";
+            echo "success";
         }
     }
 

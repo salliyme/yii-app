@@ -51,9 +51,9 @@ class WeController extends BaseController
      */
     private function responseMsg()
     {
-        $postStr = file_get_contents("php://input");
-        if (!empty($postStr)) {
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $inputData = file_get_contents("php://input");
+        if (!empty($inputData)) {
+            $postObj = simplexml_load_string($inputData, 'SimpleXMLElement', LIBXML_NOCDATA);
             $msgType = trim($postObj->MsgType);
 
             switch ($msgType) {
@@ -69,7 +69,7 @@ class WeController extends BaseController
             }
             echo $resultStr;
         } else {
-            echo "success";
+            echo "no input data";
         }
     }
 

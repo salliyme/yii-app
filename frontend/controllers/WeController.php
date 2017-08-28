@@ -24,7 +24,9 @@ class WeController extends BaseController
      */
     public function actionIndex()
     {
-        file_put_contents('@web/log.txt', var_export($_REQUEST), FILE_APPEND);
+        $file = Yii::getAlias("@runtime/logs/log.txt");
+        $message = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
+        file_put_contents($file, $message, FILE_APPEND);
         if (isset($_GET['echostr'])) {
             $this->validate();
         } else {
@@ -47,7 +49,7 @@ class WeController extends BaseController
      */
     private function responseMsg()
     {
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+        $postStr = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
         if (!empty($postStr)) {
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $msgType = trim($postObj->MsgType);
@@ -64,6 +66,8 @@ class WeController extends BaseController
                     break;
             }
             echo $resultStr;
+        } else {
+            echo "no message to parse";
         }
     }
 

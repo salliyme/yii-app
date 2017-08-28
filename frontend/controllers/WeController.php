@@ -20,6 +20,11 @@ use Yii;
 class WeController extends BaseController
 {
     /**
+     * @var bool 禁用CSRF 验证
+     */
+    public $enableCsrfValidation = false;
+
+    /**
      * default action
      */
     public function actionIndex()

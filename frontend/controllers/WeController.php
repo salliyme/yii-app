@@ -24,6 +24,7 @@ class WeController extends BaseController
      */
     public function actionIndex()
     {
+        file_put_contents('@web/log.txt', var_export($_REQUEST), FILE_APPEND);
         if (isset($_GET['echostr'])) {
             $this->validate();
         } else {

@@ -24,9 +24,6 @@ class WeController extends BaseController
      */
     public function actionIndex()
     {
-        $file = Yii::getAlias("@runtime/logs/log.txt");
-        $message = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
-        file_put_contents($file, $message, FILE_APPEND);
         if (isset($_GET['echostr'])) {
             $this->validate();
         } else {

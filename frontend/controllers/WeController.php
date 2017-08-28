@@ -27,7 +27,8 @@ class WeController extends BaseController
         if (isset($_GET['echostr'])) {
             $this->validate();
         } else {
-            $this->responseMsg();
+            echo "success";
+            //$this->responseMsg();
         }
     }
 

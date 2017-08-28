@@ -63,9 +63,6 @@ class WeController extends BaseController
                     break;
             }
             echo $resultStr;
-        } else {
-            echo "";
-            exit;
         }
     }
 

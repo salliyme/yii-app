@@ -51,9 +51,7 @@ class WeController extends BaseController
     private function responseMsg()
     {
         $inputData = file_get_contents("php://input");
-        $log = \Yii::getAlias("@runtime/logs/wechat.log");
-        $tmp = date('[Y-m-d H:i:s]');
-        file_put_contents($log, "{$tmp}--\n {$inputData} \n", FILE_APPEND);
+        $this->log($inputData);
         if (!empty($inputData)) {
             $postObj = simplexml_load_string($inputData, 'SimpleXMLElement', LIBXML_NOCDATA);
             $msgType = trim($postObj->MsgType);
@@ -85,9 +83,8 @@ class WeController extends BaseController
      */
     private function receiveText($object)
     {
-        $funcFlag = 0;
         $contentStr = "你发送的内容为：".$object->Content;
-        $resultStr = $this->transmitText($object, $contentStr, $funcFlag);
+        $resultStr = $this->transmitText($object, $contentStr);
         return $resultStr;
     }
 
@@ -164,10 +161,9 @@ class WeController extends BaseController
     /**
      * @param $object
      * @param $content
-     * @param int $funcFlag
      * @return string
      */
-    private function transmitText($object, $content, $funcFlag = 0)
+    private function transmitText($object, $content)
     {
         $textTpl = "<xml>
                         <ToUserName><![CDATA[%s]]></ToUserName>
@@ -175,9 +171,18 @@ class WeController extends BaseController
                         <CreateTime>%s</CreateTime>
                         <MsgType><![CDATA[text]]></MsgType>
                         <Content><![CDATA[%s]]></Content>
-                        <FuncFlag>%d</FuncFlag>
                     </xml>";
-        $resultStr = sprintf($textTpl, $object->FromUserName, $object->ToUserName, time(), $content, $funcFlag);
+        $resultStr = sprintf($textTpl, $object->FromUserName, $object->ToUserName, time(), $content);
         return $resultStr;
+    }
+
+    /**
+     * @param $data
+     */
+    private function log($data)
+    {
+        $log = \Yii::getAlias("@runtime/logs/wechat.log");
+        $tmp = date('[Y-m-d H:i:s]');
+        file_put_contents($log, "{$tmp}--\n {$data} \n", FILE_APPEND);
     }
 }

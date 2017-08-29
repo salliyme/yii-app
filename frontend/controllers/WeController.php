@@ -10,7 +10,6 @@ namespace frontend\controllers;
 use common\components\wechat\BaseApi;
 use common\components\wechat\OAuthApi;
 use frontend\components\BaseController;
-use frontend\components\WeApi;
 use Yii;
 
 /**
@@ -101,34 +100,61 @@ class WeController extends BaseController
             case "unsubscribe":
                 // 取消关注
                 break;
+            case "scancode_push":
+                // 扫码推事件
+                $type = $object->ScanCodeInfo->ScanType;
+                $result = $object->ScanCodeInfo->ScanResult;
+                $contentStr = $object->EventKey ."扫码解析：类型：" . $type . "内容：" . $result;
+                break;
+            case "scancode_waitmsg":
+                // 扫码推带提示
+                $type = $object->ScanCodeInfo->ScanType;
+                $result = $object->ScanCodeInfo->ScanResult;
+                $contentStr = $object->EventKey ."扫码解析：类型：" . $type . "内容：" . $result;
+                break;
+            case "pic_sysphoto":
+                // 系统拍照发图
+                $md5Sum = $object->SendPicsInfo->PicList->item->PicMd5Sum;
+                $contentStr = $object->Event . "发送的图片md5Sum：" .$md5Sum;
+                break;
+            case "pic_photo_or_album":
+                // 拍照或者相册发图
+                $md5Sum = $object->SendPicsInfo->PicList->item->PicMd5Sum;
+                $contentStr =  $object->Event . "发送的图片md5Sum：" .$md5Sum;
+                break;
+            case "pic_weixin":
+                // 微信相册发图
+                $md5Sum = $object->SendPicsInfo->PicList->item->PicMd5Sum;
+                $contentStr =  $object->Event . "发送的图片md5Sum：" .$md5Sum;
+                break;
+            case "location_select":
+                // 发送地理位置
+                $loc_x = $object->SendLocationInfo->Location_X;
+                $loc_y = $object->SendLocationInfo->Location_Y;
+                $loc_scale = $object->SendLocationInfo->Scale;
+                $loc_label = $object->SendLocationInfo->Label;
+                $loc_Poiname =  $object->SendLocationInfo->Poiname;
+                $contentStr = "发送的地址详细信息：（X: ".$loc_x . "Y: ".$loc_y .
+                    "Scale: ".$loc_scale . "Label: ". $loc_label . "Poiname: " . $loc_Poiname .")";
+                break;
             case "CLICK":
                 switch ($object->EventKey) {
-                    case "company":
-                        $contentStr[] = array(
-                            "Title" => "公司简介",
-                            "Description" => "方倍工作室提供移动互联网相关的产品及服务",
-                            "PicUrl" => "http://discuz.comli.com/weixin/weather/icon/cartoon.jpg",
-                            "Url" => "weixin://addfriend/pondbaystudio"
-                        );
+                    case "sign_in":
+                        // 点击签到
+                        $contentStr = "签到成功，记得明日再来";
                         break;
-                    default:
-                        $contentStr[] = array(
-                            "Title" => "默认菜单回复",
-                            "Description" => "您正在使用的是方倍工作室的自定义菜单测试接口",
-                            "PicUrl" => "http://discuz.comli.com/weixin/weather/icon/cartoon.jpg",
-                            "Url" => "weixin://addfriend/pondbaystudio"
-                        );
-                        break;
+                }
+                break;
+            case "VIEW":
+                switch ($object->EventKey) {
+                    case 'http://www.qq.com':
+                        $contentStr = '访问QQ网站';
                 }
                 break;
             default:
                 break;
         }
-        if (is_array($contentStr)) {
-            $resultStr = $this->transmitNews($object, $contentStr);
-        } else {
-            $resultStr = $this->transmitText($object, $contentStr);
-        }
+        $resultStr = $this->transmitText($object, $contentStr);
         return $resultStr;
     }
 
@@ -149,46 +175,6 @@ class WeController extends BaseController
                         <FuncFlag>%d</FuncFlag>
                     </xml>";
         $resultStr = sprintf($textTpl, $object->FromUserName, $object->ToUserName, time(), $content, $funcFlag);
-        return $resultStr;
-    }
-
-    /**
-     * @param $object
-     * @param $arr_item
-     * @param int $funcFlag
-     * @return bool|string
-     */
-    private function transmitNews($object, $arr_item, $funcFlag = 0)
-    {
-        //首条标题28字，其他标题39字
-        if (!is_array($arr_item)) {
-            return false;
-        }
-
-        $itemTpl = "<item>
-                        <Title><![CDATA[%s]]></Title>
-                        <Description><![CDATA[%s]]></Description>
-                        <PicUrl><![CDATA[%s]]></PicUrl>
-                        <Url><![CDATA[%s]]></Url>
-                    </item>";
-        $item_str = "";
-        foreach ($arr_item as $item) {
-            $item_str .= sprintf($itemTpl, $item['Title'], $item['Description'], $item['PicUrl'], $item['Url']);
-        }
-
-        $newsTpl = "<xml>
-                        <ToUserName><![CDATA[%s]]></ToUserName>
-                        <FromUserName><![CDATA[%s]]></FromUserName>
-                        <CreateTime>%s</CreateTime>
-                        <MsgType><![CDATA[news]]></MsgType>
-                        <Content><![CDATA[]]></Content>
-                        <ArticleCount>%s</ArticleCount>
-                        <Articles>
-                        $item_str</Articles>
-                        <FuncFlag>%s</FuncFlag>
-                   </xml>";
-
-        $resultStr = sprintf($newsTpl, $object->FromUserName, $object->ToUserName, time(), count($arr_item), $funcFlag);
         return $resultStr;
     }
 

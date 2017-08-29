@@ -65,6 +65,9 @@ class WeController extends BaseController
                 case "event":
                     $resultStr = $this->receiveEvent($postObj);
                     break;
+                case "location":
+                    $resultStr = "位置信息";
+                    break;
                 default:
                     $resultStr = "";
                     break;
@@ -137,7 +140,7 @@ class WeController extends BaseController
                 $loc_scale = $object->SendLocationInfo->Scale;
                 $loc_label = $object->SendLocationInfo->Label;
                 $loc_Poiname =  $object->SendLocationInfo->Poiname;
-                $contentStr = "发送的地址详细信息：（X: ".$loc_x . "Y: ".$loc_y .
+                $contentStr = "发送的地址详细信息：(X: ".$loc_x . "Y: ".$loc_y .
                     "Scale: ".$loc_scale . "Label: ". $loc_label . "Poiname: " . $loc_Poiname .")";
                 break;
             case "CLICK":

@@ -52,7 +52,7 @@ class WeController extends BaseController
     {
         $inputData = file_get_contents("php://input");
         $log = \Yii::getAlias("@runtime/logs/wechat.log");
-        file_put_contents($log, $inputData .'\n', FILE_APPEND);
+        file_put_contents($log, $inputData .'\r\n', FILE_APPEND);
         if (!empty($inputData)) {
             $postObj = simplexml_load_string($inputData, 'SimpleXMLElement', LIBXML_NOCDATA);
             $msgType = trim($postObj->MsgType);

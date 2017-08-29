@@ -18,8 +18,15 @@ class TestController extends Controller
 {
     public function actionIndex()
     {
-        $content = "发送的地址详细信息：(X: 30.589799880981445Y: 104.0660171508789Scale: 16Label: 武侯区茂业中心(天韵路)Poiname: [位置])";
-        $content = preg_replace(['/[\[\]]/'], [''], $content);
-        echo $content;
+        $xml = " <xml>
+<ToUserName><![CDATA[oiQfstwVBtsfJRb9n7vjzch6JSHo]]></ToUserName>
+<FromUserName><![CDATA[gh_486e130541d5]]></FromUserName>
+<CreateTime>1503996961</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[发送的地址详细信息：(X: 30.590505599975586Y: 104.06562042236328Scale: 16Label: ACC中航城市广场(九方购物中心东北)Poiname: 位置)]]></Content>
+</xml> 
+";
+        $object = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
+        var_dump($object);
     }
 }

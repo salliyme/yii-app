@@ -185,6 +185,6 @@ class WeController extends BaseController
     {
         $log = \Yii::getAlias("@runtime/logs/wechat.log");
         $tmp = date('[Y-m-d H:i:s]');
-        file_put_contents($log, "{$tmp}--\n {$data} \n", FILE_APPEND);
+        file_put_contents($log, "{$tmp}\n{$data}\n", FILE_APPEND);
     }
 }

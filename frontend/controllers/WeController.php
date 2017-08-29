@@ -51,6 +51,8 @@ class WeController extends BaseController
     private function responseMsg()
     {
         $inputData = file_get_contents("php://input");
+        $log = \Yii::getAlias("@runtime/logs/wechat.log");
+        file_put_contents($log, $inputData .'\n', FILE_APPEND);
         if (!empty($inputData)) {
             $postObj = simplexml_load_string($inputData, 'SimpleXMLElement', LIBXML_NOCDATA);
             $msgType = trim($postObj->MsgType);
@@ -173,22 +175,5 @@ class WeController extends BaseController
                     </xml>";
         $resultStr = sprintf($textTpl, $object->FromUserName, $object->ToUserName, time(), $content, $funcFlag);
         return $resultStr;
-    }
-
-
-    /**
-     * auth function
-     */
-    public function actionAuth()
-    {
-        $we = new OAuthApi();
-        if (isset($_GET['code'], $_GET['state'])) {
-            $result = $we->getOauth2AccessToken($_GET['code']);
-            $info = $we->getOauth2UserInfo($result['access_token'], $result['openid']);
-            var_dump($info);
-        } else {
-            $url = $we->buildOAuth2Url(Yii::$app->request->absoluteUrl, 'snsapi_userinfo', 'login');
-            $this->redirect($url);
-        }
     }
 }

@@ -31,6 +31,7 @@ class TestController extends Controller
 </SendPicsInfo>
 </xml>';
         $postObj = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
-        var_dump($postObj);
+
+        echo $postObj->Event;
     }
 }

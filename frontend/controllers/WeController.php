@@ -146,10 +146,7 @@ class WeController extends BaseController
                 }
                 break;
             case "VIEW":
-                switch ($object->EventKey) {
-                    case 'http://www.qq.com':
-                        $contentStr = '访问QQ网站';
-                }
+                $contentStr = "点击：" . $object->EventKey;
                 break;
             default:
                 break;

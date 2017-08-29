@@ -155,6 +155,7 @@ class WeController extends BaseController
                 break;
         }
         $resultStr = $this->transmitText($object, $contentStr);
+        $this->log($resultStr);
         return $resultStr;
     }
 

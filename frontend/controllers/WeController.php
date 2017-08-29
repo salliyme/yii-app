@@ -166,7 +166,7 @@ class WeController extends BaseController
      */
     private function transmitText($object, $content)
     {
-        $content = preg_replace(['[',']'], ['',''], $content);
+        $content = preg_replace(['/[\[\]]/'], [''], $content);
         $textTpl = "<xml>
 <ToUserName><![CDATA[%s]]></ToUserName>
 <FromUserName><![CDATA[%s]]></FromUserName>

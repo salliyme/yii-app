@@ -27,4 +27,20 @@ class MenuApi extends BaseApi
 
         return $result;
     }
+
+    /**
+     * 查询自定义菜单
+     * @return mixed
+     */
+    public function get()
+    {
+        $url = 'https://api.weixin.qq.com/cgi-bin/menu/get';
+        $params = [
+            'access_token' => $this->getAccessToken()
+        ];
+        $url = $this->composeUrl($url, $params);
+        $result = static::curlGet($url);
+
+        return $result;
+    }
 }

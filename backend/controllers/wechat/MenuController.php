@@ -33,13 +33,20 @@ class MenuController extends XController
      */
     public function actionCustom()
     {
+        $menu = new MenuApi();
         if (Yii::$app->request->isPost) {
             $json = Yii::$app->request->post('menu');
-            $menu = new MenuApi();
             $result = $menu->create($json);
-            var_dump($result);
+            $result = json_decode($result, true);
+            if (isset($result['errcode']) && $result['errcode']) {
+                Yii::$app->session->setFlash('success', '保存成功');
+            } else {
+                Yii::$app->session->setFlash('error', '保存失败');
+            }
+        } else {
+            $json = $menu->get();
         }
 
-        return $this->render('custom');
+        return $this->render('custom', ['json' => $json]);
     }
 }

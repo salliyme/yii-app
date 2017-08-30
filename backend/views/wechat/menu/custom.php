@@ -13,8 +13,8 @@ $this->title = '自定义菜单';
         <h4>自定义菜单设置</h4>
         <form action="<?=\yii\helpers\Url::to(['custom'])?>" method="post">
             <label>菜单数据JSON格式：</label>
-            <textarea name="menu" cols="80" rows="15"></textarea>
-            <input type="submit" value="确定创建">
+            <textarea name="menu" cols="80" rows="15"><?=$json?></textarea>
+            <input type="submit" value="保存">
         </form>
     </div>
 </div>

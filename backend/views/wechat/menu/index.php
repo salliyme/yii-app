@@ -9,5 +9,7 @@ $this->title = '菜单管理';
 ?>
 
 <div class="row">
-    <a class="btn btn-primary" href="<?=\yii\helpers\Url::to(['custom'])?>">自定义菜单</a>
+    <div class="col-md-6">
+        <a class="btn btn-primary" href="<?=\yii\helpers\Url::to(['custom'])?>">自定义菜单</a>
+    </div>
 </div>
